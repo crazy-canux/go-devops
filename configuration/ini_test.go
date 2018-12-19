@@ -1,4 +1,4 @@
-package ini
+package configuration
 
 import (
 	"testing"
@@ -25,7 +25,7 @@ func TestSetKey(t *testing.T) {
 	if err != nil {
 		t.Errorf("load file error: %v", err)
 	}
-	err = SetKey(cfg, "auth.anonymous", "enabled","true", true)
+	err = SetKey(cfg, "auth.anonymous", "enabled", "true", true)
 	if err != nil {
 		t.Errorf("set key error: %v", err)
 	}

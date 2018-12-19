@@ -1,4 +1,4 @@
-package influxdb
+package tickstack
 
 import (
 	"github.com/influxdata/influxdb/client/v2"

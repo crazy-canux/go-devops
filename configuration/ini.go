@@ -1,8 +1,8 @@
-package ini
+package configuration
 
 import (
-	"log"
 	"github.com/go-ini/ini"
+	"log"
 )
 
 func LoadIni(filename string) (*ini.File, error) {
@@ -35,7 +35,7 @@ func SetKey(cfg *ini.File, section, key, value string, create bool) error {
 		return nil
 	}
 	k, err := sec.GetKey(key)
-	if err != nil && !create{
+	if err != nil && !create {
 		log.Printf("Key %s not exist.", key)
 		return err
 	} else if err != nil && create {
