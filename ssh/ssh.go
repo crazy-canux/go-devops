@@ -1,29 +1,30 @@
-package main
+package ssh
 
 import (
 	"golang.org/x/crypto/ssh"
 	"log"
 	"bytes"
-	"fmt"
 )
 
-func main() {
+func Run(ip, user, pw, cmd string) (string, string, error) {
 	config := &ssh.ClientConfig{
-		User: "canux",
+		User: user,
 		Auth: []ssh.AuthMethod{
-			ssh.Password("canux"),
+			ssh.Password(pw),
 		},
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
-	client, err := ssh.Dial("tcp", "127.0.0.1:22", config)
+	client, err := ssh.Dial("tcp", ip, config)
 	if err != nil {
-		log.Fatal("Failed to dial: ", err)
+		log.Println("Failed to dial.")
+		return "", "", err
 	}
 	defer client.Close()
 
 	session, err := client.NewSession()
 	if err != nil {
-		log.Fatal("Failed to create session: ", err)
+		log.Println("Failed to create session.")
+		return "", "", err
 	}
 	defer session.Close()
 
@@ -31,8 +32,10 @@ func main() {
 	session.Stdout = &stdOut
 	session.Stderr = &stdErr
 
-	session.Run("who")
-
-	fmt.Println(stdOut.String())
-	fmt.Println(stdErr.String())
+	err = session.Run(cmd)
+	if err != nil {
+		log.Println("Run command failed.")
+		return "", "", err
+	}
+	return stdOut.String(), stdErr.String(), nil
 }

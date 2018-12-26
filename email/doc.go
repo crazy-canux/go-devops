@@ -1,0 +1,6 @@
+/*
+    smtp
+
+    gomail
+ */
+package email

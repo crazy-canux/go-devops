@@ -1,0 +1,16 @@
+language: go
+go:
+  - 1.11
+  - tip
+
+install:
+  - go get -u golang.org/x/tools/cmd/cover
+  - go get -u golang.org/x/lint/golint
+  - go get -u github.com/mattn/goveralls
+
+script:
+  - go test -v ./...
+  - golint ./...
+
+after_success:
+- goveralls -service=travis-ci

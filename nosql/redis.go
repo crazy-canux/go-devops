@@ -1,24 +1,29 @@
-package main
+package nosql
 
 import (
     "github.com/go-redis/redis"
-    "fmt"
+    "log"
 )
 
-
-func main() {
+func Info(ip, pw string, db int) (string, error) {
     client := redis.NewClient(
         &redis.Options{
-            Addr: "127.0.0.1:6379",
-            Password: "",
-            DB: 0,
+            Addr: ip,
+            Password: pw,
+            DB: db,
         },
     )
     defer client.Close()
 
-    //pong, err := client.Ping().Result()
-    //fmt.Println(pong, err)
-
+    ping, err := client.Ping().Result()
+    if err != nil {
+        log.Printf("Connection failed: %s", ping)
+        return "", err
+    }
     info, err := client.Info().Result()
-    fmt.Println(info, err)
+    if err != nil {
+        log.Printf("Get info failed: %s", info)
+        return "", err
+    }
+    return info, nil
 }

@@ -1,12 +1,13 @@
-package main
+package nosql
 
 import (
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"fmt"
+	"log"
 )
 
-type ServerStatus struct {
+type Status struct {
 	Host               string                 `bson:"host"`
 	Version            string                 `bson:"version"`
 	Process            string                 `bson:"process"`
@@ -19,29 +20,33 @@ type ServerStatus struct {
 	StorageEngine      map[string]string      `bson:"storageEngine"`
 }
 
-func main() {
-	session, err := mgo.Dial("mongodb://127.0.0.1:27017")
+func ServerStatus(ip string) (*Status, error) {
+	var status = &Status{}
+	uri := fmt.Sprintf("mongodb://%s", ip)
+	session, err := mgo.Dial(uri)
 	if err != nil {
+		log.Println("Dial failed.")
+		return status, err
 		fmt.Println("dial failed: ", err)
 	}
 	defer session.Close()
 
-	//err = session.Ping()
-	//if err != nil {
-	//	fmt.Println("ping failed: ", err)
-	//}
+	err = session.Ping()
+	if err != nil {
+		log.Println("ping failed.")
+		return status, err
+	}
 
-	//names, err := session.DatabaseNames()
-	//if err != nil {
-	//	fmt.Println("get databasenames failed: ", err)
-	//}
-	//fmt.Println(names)
-	var serverResult = &ServerStatus{}
-	session.Run(
+	err = session.Run(
 		bson.D{
 			{Name: "serverStatus"},
 			{Value: 1},
 		},
-		serverResult)
-	fmt.Println(*serverResult)
+		status,
+	)
+	if err != nil {
+		log.Println("Get serverStatus failed.")
+		return status, err
+	}
+	return status, err
 }
