@@ -4,8 +4,9 @@ import (
 	"testing"
 )
 
-var src = "/home/canux/Src/go/src/github.com/go-devops/data/cryptographic/APT.yar"
-var dest = "/home/canux/Src/go/src/github.com/go-devops/data/cryptographic/APT.yar.aes"
+var src = "/home/canux/Src/go/src/github.com/crazy-canux/go-devops/data/cryptographic/APT.yar"
+var dest = "/home/canux/Src/go/src/github.com/crazy-canux/go-devops/data/cryptographic/APT.yar.aes"
+var verify = "/home/canux/Src/go/src/github.com/crazy-canux/go-devops/data/cryptographic/APT1.yar"
 var key = "yNFX2EerZneJfG2o"
 
 func TestAesEncryptFile(t *testing.T) {
@@ -13,16 +14,14 @@ func TestAesEncryptFile(t *testing.T) {
 
 	err := EncryptFile(src, dest, key)
 	if err != nil {
-		t.Error("Encrypt file failed.")
+		t.Errorf("Encrypt file failed: %s", err)
 	}
 }
 
 func TestAesDecryptFile(t *testing.T) {
-	plaintext, err := DecryptFile(dest, key)
+	err := DecryptFile(dest, verify, key)
 	if err != nil {
 		t.Error("Decrypt file failed.")
-	} else {
-		t.Log(plaintext)
 	}
 }
 

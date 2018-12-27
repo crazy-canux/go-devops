@@ -6,31 +6,37 @@ import (
 	"io/ioutil"
 	"log"
 	"errors"
-	"fmt"
+	//"fmt"
 	//"encoding/hex"
 )
 
-func DecryptFile(filename, key string) (string, error) {
+func DecryptFile(src, dest, key string) error {
 
-	cipherText, err := ioutil.ReadFile(filename)
+	cipherText, err := ioutil.ReadFile(src)
 	if err != nil {
 		log.Println("Read file failed.")
-		return "", err
+		return err
 	}
 
 	block, err := aes.NewCipher([]byte(key))
 	if err != nil {
 		log.Println("Create cipher block failed.")
-		return "", err
+		return err
 	}
 
 	if len(cipherText) < aes.BlockSize {
 		log.Println("Key must be 16,24,32.")
-		return "", errors.New("ciphertext too short")
+		return errors.New("ciphertext too short")
 	}
 
 	iv := cipherText[:aes.BlockSize]
 	cipherText = cipherText[aes.BlockSize:]
 	cipher.NewCFBDecrypter(block, iv).XORKeyStream(cipherText, cipherText)
-	return fmt.Sprintf("%s", cipherText), nil
+
+	err = ioutil.WriteFile(dest, cipherText, 0755)
+	if err != nil {
+		log.Println("Save decrypted file failed.")
+		return err
+	}
+	return nil
 }

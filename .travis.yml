@@ -6,7 +6,15 @@ go:
 install:
   - go get -u golang.org/x/tools/cmd/cover
   - go get -u golang.org/x/lint/golint
+  - go get -u golang.org/x/crypto/ssh
   - go get -u github.com/mattn/goveralls
+  - go get -u github.com/go-ini/ini
+  - go get -u gopkg.in/gomail.v2
+  - go get -u github.com/denisenkom/go-mssqldb
+  - go get -u github.com/go-sql-driver/mysql
+  - go get -u gopkg.in/mgo.v2
+  - go get -u github.com/go-redis/redis
+  - go get -u github.com/influxdata/influxdb/tree/master/client/v2
 
 script:
   - go test -v ./...

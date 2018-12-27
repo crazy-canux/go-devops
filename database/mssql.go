@@ -5,7 +5,7 @@ import (
     "fmt"
     "log"
 
-    _ "github.com/zensqlmonitor/go-mssqldb"
+    _ "github.com/denisenkom/go-mssqldb"
 )
 
 func MssqlVersion(host string, port int, database, username, password string) (string, error) {
