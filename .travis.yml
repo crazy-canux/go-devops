@@ -14,7 +14,7 @@ install:
   - go get -u github.com/go-sql-driver/mysql
   - go get -u gopkg.in/mgo.v2
   - go get -u github.com/go-redis/redis
-  - go get -u github.com/influxdata/influxdb/tree/master/client/v2
+  - go get -u github.com/influxdata/influxdb/client
 
 script:
   - go test -v ./...

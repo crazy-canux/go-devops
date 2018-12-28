@@ -5,5 +5,10 @@ import (
 )
 
 func TestServerStatus(t *testing.T) {
-	ServerStatus("10.103.239.43:27017")
+	status, err := ServerStatus("10.103.239.42:27017")
+	if err != nil {
+		t.Errorf("failed: %s", err)
+	} else {
+		t.Logf("%v", status.Host)
+	}
 }

@@ -6,6 +6,7 @@ import (
 	"bytes"
 )
 
+// Run command on remote server by ssh.
 func Run(ip, user, pw, cmd string) (string, string, error) {
 	config := &ssh.ClientConfig{
 		User: user,

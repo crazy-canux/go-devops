@@ -46,6 +46,7 @@ type SmtpResp struct {
 	} `json:"elements"`
 }
 
+// Get smtp config from kapacitor.
 func GetSmtp(host, port string) (*Response, error) {
 	var response Response
 	url := "http://" + host + ":" + port + "/kapacitor/v1/config/smtp"

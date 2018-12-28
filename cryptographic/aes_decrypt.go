@@ -10,6 +10,7 @@ import (
 	//"encoding/hex"
 )
 
+// decrypt file with aes and save to another file.
 func DecryptFile(src, dest, key string) error {
 
 	cipherText, err := ioutil.ReadFile(src)

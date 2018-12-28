@@ -11,10 +11,11 @@ var verify = "/home/canux/Src/go/src/github.com/crazy-canux/go-devops/data/crypt
 // 16, 24, 32
 var key = "yNFX2EerZneJfG2o"
 
-func TestAesEncryptFile(t *testing.T) {
-
-	err := EncryptFile(src, dest, key)
+func TestAesDecryptFile(t *testing.T) {
+	err := DecryptFile(dest, verify, key)
 	if err != nil {
-		t.Errorf("Encrypt file failed: %s", err)
+		t.Error("Decrypt file failed.")
 	}
 }
+
+

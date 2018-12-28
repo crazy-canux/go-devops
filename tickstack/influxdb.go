@@ -5,6 +5,7 @@ import (
 	"log"
 )
 
+// Query from influxdb.
 func Query(url, measurement, ifql string) ([]string, [][]interface{}, error) {
 	config := client.HTTPConfig{
 		Addr: url,

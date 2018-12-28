@@ -9,6 +9,7 @@ import (
 	"io"
 )
 
+// encrypt file with aes and save to another file.
 func EncryptFile(src, dest, key string) error {
 	plaintext, err := ioutil.ReadFile(src)
 	if err != nil {
@@ -36,6 +37,5 @@ func EncryptFile(src, dest, key string) error {
 		log.Println("Save encrypted file failed.")
 		return err
 	}
-
 	return nil
 }
