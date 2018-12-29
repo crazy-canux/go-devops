@@ -5,7 +5,7 @@ import (
 )
 
 func TestGetSmtp(t *testing.T) {
-	resp, err := GetSmtp("10.103.239.60", "9092")
+	resp, err := GetSmtp("127.0.0.1", "9092")
 	if err != nil {
 		t.Error("test getsmtp failed.")
 	} else {

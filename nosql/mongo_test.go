@@ -5,7 +5,7 @@ import (
 )
 
 func TestServerStatus(t *testing.T) {
-	status, err := ServerStatus("10.103.239.42:27017")
+	status, err := ServerStatus("127.0.0.1:27017")
 	if err != nil {
 		t.Errorf("failed: %s", err)
 	} else {

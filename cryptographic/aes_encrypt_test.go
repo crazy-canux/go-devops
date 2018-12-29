@@ -9,7 +9,7 @@ var dest = "/home/canux/Src/go/src/github.com/crazy-canux/go-devops/data/cryptog
 var verify = "/home/canux/Src/go/src/github.com/crazy-canux/go-devops/data/cryptographic/APT1.yar"
 
 // 16, 24, 32
-var key = "yNFX2EerZneJfG2o"
+var key = "aNFX2EerZneJfG2z"
 
 func TestAesEncryptFile(t *testing.T) {
 

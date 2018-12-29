@@ -1,6 +1,4 @@
 /*
-    smtp
-
     gomail
  */
 package email

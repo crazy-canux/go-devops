@@ -5,7 +5,7 @@ import (
 )
 
 func TestMssqlVersion(t *testing.T) {
-	version, err := MssqlVersion("10.103.239.70", 1433, "sandbox", "sandbox", "P@ssword")
+	version, err := MssqlVersion("127.0.0.1", 1433, "sandbox", "sandbox", "P@ssword")
 	if err != nil {
 		t.Error("failed")
 	} else {

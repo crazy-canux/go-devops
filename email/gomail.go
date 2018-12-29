@@ -6,6 +6,7 @@ import (
     "log"
 )
 
+// Send PlainText.
 func SendText(host string, port int, username, password string, to []string, from, cc, subject, body string) error {
     addresses := make([]string, len(to))
 
