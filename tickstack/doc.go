@@ -92,8 +92,8 @@ monitoring host filesystem mount /proc:
 
     $ docker run -d --name=telegraf --restart=always \
     --net=influxdb --add-host="influxdb:10.103.0.1" \
-    -e HOST_PROC=/proc -e HOST_SYS=/sys -e HOST_ETC=/etc -e HOST_VAR=/var \
-    -v /proc:/proc:ro -v /sys:/sys -v /etc:/etc -v /var:/var \
+    -e HOST_PROC=/home/proc \
+    -v /proc:/home/proc:ro \
     -v telegraf-storage/telegraf.conf:/etc/telegraf/telegraf.conf:ro \
     telegraf:tag
 
@@ -104,7 +104,7 @@ monitoring other container with docker plugin:
 
     $ docker run -d --name=telegraf \
     --net=influxdb \
-    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v /var/run/docker.sock:/var/run/docker.sock:ro \
     -v telegraf-storage/telegraf.conf:/etc/telegraf/telegraf.conf:ro \
     telegraf:tag
 
