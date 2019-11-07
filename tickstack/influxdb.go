@@ -5,13 +5,15 @@ import (
 	"log"
 )
 
-func Query(url, measurement, ifql string) {
+// Query from influxdb.
+func Query(url, measurement, ifql string) ([]string, [][]interface{}, error) {
 	config := client.HTTPConfig{
 		Addr: url,
 	}
 	c, err := client.NewHTTPClient(config)
 	if err != nil {
-		log.Fatal("connect error: ", err)
+		log.Println("Connect failed.")
+		return nil, nil, err
 	}
 	defer c.Close()
 
@@ -30,15 +32,18 @@ func Query(url, measurement, ifql string) {
 				log.Println("Name: ", row.Name)
 				log.Println("Partial: ", row.Partial)
 				log.Println("Tags: ", row.Tags)
-				for _, col := range row.Columns {
-					log.Println(col)
-				}
-				for _, value := range row.Values {
-					log.Println(value)
-				}
+				//for _, col := range row.Columns {
+				//	log.Println(col)
+				//}
+				//for _, value := range row.Values {
+				//	log.Println(value)
+				//}
+				return row.Columns, row.Values, nil
 			}
 		}
 	} else {
-		log.Fatal(response.Error())
+		log.Println("Query failed.")
+		return nil, nil, err
 	}
+	return nil, nil, nil
 }

@@ -48,4 +48,5 @@ func SetKey(cfg *ini.File, section, key, value string, create bool) error {
 	} else {
 		k.SetValue(value)
 	}
+	return nil
 }
