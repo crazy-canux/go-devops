@@ -1,11 +1,10 @@
-module go-devops
+module github.com/crazy-canux/go-devops
 
 go 1.13
 
 require (
 	github.com/Microsoft/go-winio v0.4.14 // indirect
 	github.com/coreos/go-iptables v0.4.3
-	github.com/crazy-canux/go-devops v0.0.0-20191102100512-6a9094c72944
 	github.com/denisenkom/go-mssqldb v0.0.0-20191001013358-cfbb681360f0
 	github.com/docker/distribution v2.7.1+incompatible // indirect
 	github.com/docker/docker v1.13.1
