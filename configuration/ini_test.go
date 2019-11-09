@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-var filename = "/home/canux/Src/go/src/github.com/go-devops/data/configuration/grafana.ini"
+var filename = "/home/canux/Src/go/src/github.com/crazy-canux/go-devops/data/configuration/grafana.ini"
 
 func TestGetKey(t *testing.T) {
 	cfg, err := LoadIni(filename)

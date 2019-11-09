@@ -3,6 +3,7 @@ module github.com/crazy-canux/go-devops
 go 1.13
 
 require (
+	github.com/BurntSushi/toml v0.3.1
 	github.com/Microsoft/go-winio v0.4.14 // indirect
 	github.com/coreos/go-iptables v0.4.3
 	github.com/denisenkom/go-mssqldb v0.0.0-20191001013358-cfbb681360f0
@@ -31,4 +32,9 @@ require (
 	gopkg.in/ini.v1 v1.50.0 // indirect
 	gopkg.in/mgo.v2 v2.0.0-20190816093944-a6b53ec6cb22
 	gopkg.in/yaml.v2 v2.2.5 // indirect
+)
+
+replace (
+	golang.org/x/crypto v0.0.0-20191106202628-ed6320f186d4 => github.com/golang/crypto v0.0.0-20191106202628-ed6320f186d4
+	golang.org/x/net v0.0.0-20191105084925-a882066a44e0 => github.com/golang/net v0.0.0-20191105084925-a882066a44e0
 )
