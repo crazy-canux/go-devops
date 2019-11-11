@@ -10,7 +10,7 @@ require (
 	github.com/docker/docker v1.13.1
 	github.com/docker/go-connections v0.4.0 // indirect
 	github.com/docker/go-units v0.4.0 // indirect
-	github.com/go-ini/ini v1.50.0
+	github.com/go-ini/ini v1.51.0
 	github.com/go-redis/redis v6.15.6+incompatible
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/google/go-cmp v0.3.1 // indirect
@@ -22,8 +22,9 @@ require (
 	github.com/smartystreets/goconvey v1.6.4 // indirect
 	github.com/streadway/amqp v0.0.0-20190827072141-edfb9018d271
 	github.com/stretchr/testify v1.4.0 // indirect
-	golang.org/x/crypto v0.0.0-20191106202628-ed6320f186d4
-	golang.org/x/net v0.0.0-20191105084925-a882066a44e0
+	golang.org/x/crypto v0.0.0-20191108234033-bd318be0434a
+	golang.org/x/net v0.0.0-20191109021931-daa7c04131f5
+	golang.org/x/sys v0.0.0-20191110163157-d32e6e3b99c4 // indirect
 	google.golang.org/appengine v1.6.5 // indirect
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
