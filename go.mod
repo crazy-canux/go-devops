@@ -3,7 +3,6 @@ module github.com/crazy-canux/go-devops
 go 1.13
 
 require (
-	github.com/BurntSushi/toml v0.3.1
 	github.com/Microsoft/go-winio v0.4.14 // indirect
 	github.com/coreos/go-iptables v0.4.3
 	github.com/denisenkom/go-mssqldb v0.0.0-20191001013358-cfbb681360f0
