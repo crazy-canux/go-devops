@@ -1,9 +1,9 @@
 package utils
 
 import (
-	"path/filepath"
 	"log"
 	"os"
+	"path/filepath"
 )
 
 var files []string
@@ -58,4 +58,3 @@ func ExtIn(file string, list []string) bool {
 	}
 	return false
 }
-

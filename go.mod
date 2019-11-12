@@ -22,7 +22,7 @@ require (
 	github.com/smartystreets/goconvey v1.6.4 // indirect
 	github.com/streadway/amqp v0.0.0-20190827072141-edfb9018d271
 	github.com/stretchr/testify v1.4.0 // indirect
-	golang.org/x/crypto v0.0.0-20191108234033-bd318be0434a
+	golang.org/x/crypto v0.0.0-20191111213947-16651526fdb4
 	golang.org/x/net v0.0.0-20191109021931-daa7c04131f5
 	golang.org/x/sys v0.0.0-20191110163157-d32e6e3b99c4 // indirect
 	google.golang.org/appengine v1.6.5 // indirect

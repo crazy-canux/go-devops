@@ -17,5 +17,3 @@ func TestAesDecryptFile(t *testing.T) {
 		t.Error("Decrypt file failed.")
 	}
 }
-
-

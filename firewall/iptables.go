@@ -43,7 +43,7 @@ func CleanUDC() {
 	for table := range ipts {
 		chains := ListChain(table)
 		for _, chain := range chains {
-			if ! utils.In(chain, ipts[table]) {
+			if !utils.In(chain, ipts[table]) {
 				ClearChain(table, chain)
 				DeleteChain(table, chain)
 			}

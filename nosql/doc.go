@@ -9,6 +9,6 @@ launch with specify volume:
 
 # Mongo
 
- */
+*/
 
 package nosql

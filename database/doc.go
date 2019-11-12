@@ -17,5 +17,5 @@ files in /docker-entrypoint-initdb.d will be executed when container started(.sh
 
 # SqlServer
 
- */
+*/
 package database

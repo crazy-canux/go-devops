@@ -3,9 +3,9 @@ package cryptographic
 import (
 	"crypto/aes"
 	"crypto/cipher"
+	"errors"
 	"io/ioutil"
 	"log"
-	"errors"
 	//"fmt"
 	//"encoding/hex"
 )

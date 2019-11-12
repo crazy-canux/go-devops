@@ -24,4 +24,3 @@ func Ping(url string, timeout string) bool {
 	}
 	return false
 }
-

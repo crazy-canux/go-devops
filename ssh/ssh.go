@@ -1,9 +1,9 @@
 package ssh
 
 import (
+	"bytes"
 	"golang.org/x/crypto/ssh"
 	"log"
-	"bytes"
 )
 
 // Run command on remote server by ssh.

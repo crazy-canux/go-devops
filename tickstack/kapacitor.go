@@ -1,46 +1,46 @@
 package tickstack
 
 import (
-	"net/http"
-	"log"
-	"io/ioutil"
 	"encoding/json"
+	"io/ioutil"
+	"log"
+	"net/http"
 )
 
 type Response struct {
-	Enabled bool
-	From string
-	Global bool
-	Host string
-	IdleTimeout string
-	NoVerify bool
-	Port int
+	Enabled          bool
+	From             string
+	Global           bool
+	Host             string
+	IdleTimeout      string
+	NoVerify         bool
+	Port             int
 	StateChangesOnly bool
-	To []string
+	To               []string
 }
 
 type SmtpResp struct {
 	Link struct {
-		Rel string `json:"rel"`
+		Rel  string `json:"rel"`
 		Href string `json:"href"`
 	} `json:"link"`
 	Elements []struct {
 		Link struct {
-			Rel string `json:"rel"`
+			Rel  string `json:"rel"`
 			Href string `json:"href"`
 		} `json:"link"`
 		Options struct {
-			Enabled bool `json:"enabled"`
-			From string `json:"from"`
-			Global bool `json:"global"`
-			Host string `json:"host"`
-			IdleTimeout string `json:"idle-timeout"`
-			NoVerify bool `json:"no-verify"`
-			Password bool `json:"password"`
-			Port int `json:"port"`
-			StateChangesOnly bool `json:"state-changes-only"`
-			To []string `json:"to"`
-			Username string `json:"username"`
+			Enabled          bool     `json:"enabled"`
+			From             string   `json:"from"`
+			Global           bool     `json:"global"`
+			Host             string   `json:"host"`
+			IdleTimeout      string   `json:"idle-timeout"`
+			NoVerify         bool     `json:"no-verify"`
+			Password         bool     `json:"password"`
+			Port             int      `json:"port"`
+			StateChangesOnly bool     `json:"state-changes-only"`
+			To               []string `json:"to"`
+			Username         string   `json:"username"`
 		} `json:"options"`
 		Redacted []string `json:"redacted"`
 	} `json:"elements"`
@@ -82,4 +82,3 @@ func GetSmtp(host, port string) (*Response, error) {
 	response.To = option.To
 	return &response, nil
 }
-

@@ -4,9 +4,9 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
+	"io"
 	"io/ioutil"
 	"log"
-	"io"
 )
 
 // encrypt file with aes and save to another file.
@@ -23,7 +23,7 @@ func EncryptFile(src, dest, key string) error {
 		return err
 	}
 
-	cipherText := make([]byte, aes.BlockSize + len(plaintext))
+	cipherText := make([]byte, aes.BlockSize+len(plaintext))
 	iv := cipherText[:aes.BlockSize]
 	if _, err := io.ReadFull(rand.Reader, iv); err != nil {
 		log.Println("Read rand failed.")
