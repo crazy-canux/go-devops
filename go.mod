@@ -8,6 +8,7 @@ require (
 	github.com/denisenkom/go-mssqldb v0.0.0-20191001013358-cfbb681360f0
 	github.com/docker/distribution v2.7.1+incompatible // indirect
 	github.com/docker/docker v1.13.1
+	github.com/docker/engine v1.4.2-0.20190822180741-9552f2b2fdde // indirect
 	github.com/docker/go-connections v0.4.0 // indirect
 	github.com/docker/go-units v0.4.0 // indirect
 	github.com/go-ini/ini v1.51.0
@@ -35,6 +36,7 @@ require (
 )
 
 replace (
+	github.com/docker/docker v1.13.1 => github.com/docker/engine v1.4.2-0.20190822180741-9552f2b2fdde
 	golang.org/x/crypto v0.0.0-20191106202628-ed6320f186d4 => github.com/golang/crypto v0.0.0-20191106202628-ed6320f186d4
 	golang.org/x/net v0.0.0-20191105084925-a882066a44e0 => github.com/golang/net v0.0.0-20191105084925-a882066a44e0
 )
