@@ -2,6 +2,9 @@ language: go
 go:
   - 1.13.3
 
+sudo: false
+install: true
+
 script:
   - env GO111MODULES=on go build
   - env GO111MODULES=on go test
