@@ -1,8 +1,13 @@
 language: go
 go:
   - 1.13.3
+  - tip
 
 sudo: false
+
+before_install:
+  - go get github.com/mattn/goveralls
+
 install: true
 
 script:
@@ -10,4 +15,4 @@ script:
   - env GO111MODULES=on go test
 
 after_success:
-- goveralls -service=travis-ci
+  - goveralls -service=travis-ci
