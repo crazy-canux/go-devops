@@ -1,4 +1,4 @@
-package scp
+package ssh
 
 import (
 	"bytes"
@@ -63,6 +63,20 @@ func (a *Client) CopyFile(fileReader io.Reader, remotePath string, permissions s
 
 	return a.Copy(bytes_reader, remotePath, permissions, int64(len(contents_bytes)))
 }
+
+// Run run a shell command on remote server.
+func (a *Client) Run(cmd string) (string, string, error) {
+	var stdOut, stdErr bytes.Buffer
+	a.Session.Stdout = &stdOut
+	a.Session.Stderr = &stdErr
+
+	err := a.Session.Run(cmd)
+	if err != nil {
+		return "", "", err
+	}
+	return stdOut.String(), stdErr.String(), nil
+}
+
 
 // waitTimeout waits for the waitgroup for the specified max timeout.
 // Returns true if waiting timed out.

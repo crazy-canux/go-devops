@@ -1,4 +1,4 @@
-package scp
+package ssh
 
 import (
 	"bufio"
