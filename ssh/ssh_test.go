@@ -8,8 +8,8 @@ import (
 )
 
 func TestScp(t *testing.T) {
-	clientConfig, _ := PasswordKey("canux", "S0nicwall")
-	client := NewClient("10.103.239.40:22", &clientConfig)
+	clientConfig, _ := PasswordKey("canux", "******")
+	client := NewClient("127.0.0.1:22", &clientConfig)
 	defer client.Close()
 
 	err := client.Connect()
@@ -26,9 +26,25 @@ func TestScp(t *testing.T) {
 	}
 }
 
-func TestSsh(t *testing.T) {
-	clientConfig, _ := PasswordKey("canux", "S0nicwall")
-	client := NewClient("10.103.239.40:22", &clientConfig)
+func TestNewClient(t *testing.T) {
+	clientConfig, _ := PasswordKey("canux", "******")
+	client := NewClient("127.0.0.1:22", &clientConfig)
+	defer client.Close()
+
+	err := client.Connect()
+	if err != nil {
+		t.Error("connection failed")
+	}
+
+	o, e, err := client.Run("pwd")
+	if err != nil {
+		t.Error("run failed")
+	}
+	fmt.Print(o, e)
+}
+
+func TestNewClientWithBasicAuth(t *testing.T) {
+	client := NewClientWithBasicAuth("127.0.0.1:22", "canux", "******")
 	defer client.Close()
 
 	err := client.Connect()

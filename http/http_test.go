@@ -7,7 +7,7 @@ import (
 )
 
 func TestGet(t *testing.T) {
-	body, err := Get("https://10.103.238.16/capture/templates/README", "sandbox", "S0nicwall")
+	body, err := Get("https://127.0.0.1/path/to/file", "sandbox", "******")
 	if err != nil {
 		t.Error("get failed.")
 	}

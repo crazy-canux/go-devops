@@ -91,7 +91,7 @@ use docker network:
 monitoring host filesystem mount /proc:
 
     $ docker run -d --name=telegraf --restart=always \
-    --net=influxdb --add-host="influxdb:10.103.0.1" \
+    --net=influxdb --add-host="influxdb:192.168.1.1" \
     -e HOST_PROC=/home/proc \
     -v /proc:/home/proc:ro \
     -v telegraf-storage/telegraf.conf:/etc/telegraf/telegraf.conf:ro \
