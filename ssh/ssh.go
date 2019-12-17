@@ -5,6 +5,12 @@ import (
 	"time"
 )
 
+// use username and password.
+func NewClientWithBasicAuth(host, username, password string) Client {
+	config, _ := PasswordKey(username, password)
+	return NewConfigurer(host, &config).Create()
+}
+
 // It has a default timeout of one minute.
 func NewClient(host string, config *ssh.ClientConfig) Client {
 	return NewConfigurer(host, config).Create()
