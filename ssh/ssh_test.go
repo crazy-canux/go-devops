@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"testing"
+	"time"
 )
 
 func TestScp(t *testing.T) {
@@ -36,9 +37,26 @@ func TestNewClient(t *testing.T) {
 		t.Error("connection failed")
 	}
 
-	o, e, err := client.Run("pwd")
+	o, e, err := client.Run("pwd" )
 	if err != nil {
 		t.Error("run failed")
+	}
+	fmt.Print(o, e)
+}
+
+func TestNewClientWithTimeout(t *testing.T) {
+	clientConfig, _ := PasswordKey("canux", "******")
+	client := NewClientWithTimeout("127.0.0.1:22", &clientConfig, time.Second * 3)
+	defer client.Close()
+
+	err := client.Connect()
+	if err != nil {
+		t.Error("connection failed")
+	}
+
+	o, e, err := client.Run("sleep 2" )
+	if err != nil {
+		t.Errorf("run failed: %s", err.Error())
 	}
 	fmt.Print(o, e)
 }
@@ -49,12 +67,44 @@ func TestNewClientWithBasicAuth(t *testing.T) {
 
 	err := client.Connect()
 	if err != nil {
-		t.Error("connection failed")
+		t.Errorf("connection failed: %s", err.Error())
+	}
+
+	o, e, err := client.Run("pwd" )
+	if err != nil {
+		t.Errorf("run failed: %s", err.Error())
+	}
+	fmt.Print(o, e)
+}
+
+func TestNewClientWithBasicAuthAndTimeout(t *testing.T) {
+	client := NewClientWithBasicAuthAndTimeout("127.0.0.1:22", "canux", "******", time.Second * 3)
+	defer client.Close()
+
+	err := client.Connect()
+	if err != nil {
+		t.Errorf("connection failed: %s", err.Error())
 	}
 
 	o, e, err := client.Run("pwd")
 	if err != nil {
-		t.Error("run failed")
+		t.Errorf("run failed: %s", err.Error())
+	}
+	fmt.Print(o, e)
+}
+
+func TestRunWithSudo(t *testing.T) {
+	client := NewClientWithBasicAuthAndTimeout("127.0.0.1:22", "canux", "******", time.Second * 3)
+	defer client.Close()
+
+	err := client.Connect()
+	if err != nil {
+		t.Errorf("connection failed: %s", err.Error())
+	}
+
+	o, e, err := client.RunWithSudo("sudo echo 1")
+	if err != nil {
+		t.Errorf("run with sudo failed: %s", err.Error())
 	}
 	fmt.Print(o, e)
 }

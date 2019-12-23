@@ -2,6 +2,8 @@ package ssh
 
 import (
 	"io/ioutil"
+	"net"
+	"time"
 
 	"golang.org/x/crypto/ssh"
 )
@@ -26,6 +28,7 @@ func PrivateKey(username string, path string) (ssh.ClientConfig, error) {
 			ssh.PublicKeys(signer),
 		},
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+		Timeout: time.Minute,
 	}, nil
 }
 
@@ -47,16 +50,20 @@ func PrivateKeyWithPassphrase(username string, passpharase []byte, path string) 
 			ssh.PublicKeys(signer),
 		},
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+		Timeout: time.Minute,
 	}, nil
 }
 
 func PasswordKey(username string, password string) (ssh.ClientConfig, error) {
-
+	//var hostKey ssh.PublicKey
 	return ssh.ClientConfig{
 		User: username,
 		Auth: []ssh.AuthMethod{
 			ssh.Password(password),
 		},
-		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+		//HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+		HostKeyCallback: ssh.HostKeyCallback(func(hostname string, remote net.Addr, key ssh.PublicKey) error { return nil }),
+		//HostKeyCallback: ssh.FixedHostKey(hostKey),
+		Timeout: time.Minute,
 	}, nil
 }

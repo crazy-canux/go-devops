@@ -6,8 +6,10 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"os"
 	"path"
+	"strings"
 	"sync"
 	"time"
 
@@ -32,6 +34,9 @@ type Client struct {
 
 	// the absolute path to the remote SCP binary
 	RemoteBinary string
+
+	// password for sudo command
+	Password string
 }
 
 // Connects to the remote SSH server, returns error if it couldn't establish a session to the SSH server
@@ -70,10 +75,98 @@ func (a *Client) Run(cmd string) (string, string, error) {
 	a.Session.Stdout = &stdOut
 	a.Session.Stderr = &stdErr
 
-	err := a.Session.Run(cmd)
+	var wg sync.WaitGroup
+	wg.Add(1)
+	errCh := make(chan error, 1)
+
+	go func() {
+		defer wg.Done()
+		err := a.Session.Run(cmd)
+		if err != nil {
+			errCh <- err
+			return
+		}
+	}()
+
+	if waitTimeout(&wg, a.Timeout) {
+		return "", "", errors.New("command timeout")
+	}
+
+	close(errCh)
+	for err := range errCh {
+		if err != nil {
+			return "", "", err
+		}
+	}
+
+	return stdOut.String(), stdErr.String(), nil
+}
+
+// Run run a shell command on remote server with sudo.
+func (a *Client) RunWithSudo(cmd string ) (string, string, error) {
+	var stdOut, stdErr bytes.Buffer
+	a.Session.Stdout = &stdOut
+	a.Session.Stderr = &stdErr
+
+	// set up terminal modes
+	modes := ssh.TerminalModes{
+		ssh.ECHO:          0,     // disable echoing
+		ssh.TTY_OP_ISPEED: 14400, // input speed = 14.4kbaud
+		ssh.TTY_OP_OSPEED: 14400, // output speed = 14.4kbaud
+	}
+	// request pseudo terminal
+	err := a.Session.RequestPty("xterm", 80, 40, modes)
 	if err != nil {
+		log.Printf("set pty error: %s", err.Error())
 		return "", "", err
 	}
+	// get input
+	in, err := a.Session.StdinPipe()
+	if err != nil {
+		log.Printf("get input error: %s", err.Error())
+		return "", "", err
+	}
+	//defer in.Close()
+
+	var wg sync.WaitGroup
+	wg.Add(2)
+
+	errCh := make(chan error, 2)
+
+	go func(in io.Writer, output *bytes.Buffer) {
+		defer wg.Done()
+		for {
+			if strings.Contains(string(output.Bytes()), "[sudo] password for ") {
+				_, err = in.Write([]byte(a.Password + "\n"))
+				if err != nil {
+					break
+				}
+				fmt.Println("put the password end.")
+				break
+			}
+		}
+	}(in, &stdOut)
+
+	go func() {
+		defer wg.Done()
+		err = a.Session.Run(cmd)
+		if err != nil {
+			errCh <- err
+			return
+		}
+	}()
+
+	if waitTimeout(&wg, a.Timeout) {
+		return "", "", errors.New("command timeout")
+	}
+
+	close(errCh)
+	for err := range errCh {
+		if err != nil {
+			return "", "", err
+		}
+	}
+
 	return stdOut.String(), stdErr.String(), nil
 }
 
@@ -107,7 +200,6 @@ func checkResponse(r io.Reader) error {
 	}
 
 	return nil
-
 }
 
 // Copies the contents of an io.Reader to a remote location
@@ -126,11 +218,9 @@ func (a *Client) Copy(r io.Reader, remotePath string, permissions string, size i
 			errCh <- err
 			return
 		}
-
 		defer w.Close()
 
 		stdout, err := a.Session.StdoutPipe()
-
 		if err != nil {
 			errCh <- err
 			return
@@ -175,7 +265,7 @@ func (a *Client) Copy(r io.Reader, remotePath string, permissions string, size i
 	}()
 
 	if waitTimeout(&wg, a.Timeout) {
-		return errors.New("timeout when upload files")
+		return errors.New("download timeout")
 	}
 
 	close(errCh)

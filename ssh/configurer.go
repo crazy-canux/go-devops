@@ -7,12 +7,12 @@ import (
 )
 
 // A struct containing all the configuration options
-// used by an scp client.
 type ClientConfigurer struct {
 	host         string
 	clientConfig *ssh.ClientConfig
 	timeout      time.Duration
 	remoteBinary string
+	password     string
 }
 
 // Creates a new client configurer.
@@ -28,6 +28,17 @@ func NewConfigurer(host string, config *ssh.ClientConfig) *ClientConfigurer {
 		clientConfig: config,
 		timeout:      time.Minute,
 		remoteBinary: "scp",
+		password:     "",
+	}
+}
+
+func NewConfigurerWithBasicAuth(host, password string, config *ssh.ClientConfig) *ClientConfigurer {
+	return &ClientConfigurer{
+		host:         host,
+		clientConfig: config,
+		timeout:      time.Minute,
+		remoteBinary: "scp",
+		password:     password,
 	}
 }
 
@@ -64,5 +75,6 @@ func (c *ClientConfigurer) Create() Client {
 		ClientConfig: c.clientConfig,
 		Timeout:      c.timeout,
 		RemoteBinary: c.remoteBinary,
+		Password:     c.password,
 	}
 }
