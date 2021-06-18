@@ -40,7 +40,7 @@ func PatchMssql(host string, port int, user, pw, db string, patch string) bool {
 	connString := fmt.Sprintf("server=%s;port=%d;database=%s;user id=%s;password=%s;encrypt=disable", host, port, db, user, pw)
 	conn, err := sql.Open("mssql", connString)
 	if err != nil {
-		log.Printf("database parameter error: %s", host, err.Error())
+		log.Printf("database %s parameter error: %s", host, err.Error())
 		return false
 	}
 	defer conn.Close()
