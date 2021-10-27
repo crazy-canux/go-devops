@@ -3,6 +3,7 @@ package http
 import (
 	"bytes"
 	"crypto/tls"
+	"errors"
 	"io"
 	"io/ioutil"
 	"log"
@@ -35,9 +36,10 @@ func Get(uri string, username, password interface{}) (io.ReadCloser, error) {
 		return resp.Body, err
 	}
 
+	// TODO: 200, 201,...
 	if resp.StatusCode != 200 {
 		log.Printf("Get failed: %s", resp.Status)
-		return resp.Body, err
+		return resp.Body, errors.New(resp.Status)
 	}
 	return resp.Body, nil
 }
@@ -70,7 +72,7 @@ func Post(url string, payload []byte, username, password interface{}) (io.ReadCl
 
 	if resp.StatusCode != 200 {
 		log.Printf("Post failed: %s", resp.Status)
-		return resp.Body, err
+		return resp.Body, errors.New(resp.Status)
 	}
 	return resp.Body, nil
 }

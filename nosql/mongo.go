@@ -2,9 +2,10 @@ package nosql
 
 import (
 	"fmt"
+	"log"
+
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
-	"log"
 )
 
 type Status struct {
@@ -27,7 +28,6 @@ func ServerStatus(ip string) (*Status, error) {
 	if err != nil {
 		log.Println("Dial failed.")
 		return status, err
-		fmt.Println("dial failed: ", err)
 	}
 	defer session.Close()
 

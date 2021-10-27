@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -16,12 +17,12 @@ var fileExclude = []string{
 }
 
 func TestPathWalk(t *testing.T) {
-	files, err := PathWalk("/home/canux/Src/signature/capture/signature", dirExclude, fileExclude)
+	files, err := PathWalk("/home/canux/Documents/hastebin", dirExclude, fileExclude)
 	if err != nil {
 		t.Error("list dir failed.")
 	} else {
 		for _, f := range files {
-			t.Log(f)
+			fmt.Println(f)
 		}
 	}
 }
